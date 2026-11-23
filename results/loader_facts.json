@@ -1,0 +1,102 @@
+[
+ {
+  "file": "1.mat",
+  "backend": "h5py",
+  "pid": "100360",
+  "label": 1,
+  "image_shape": [
+   512,
+   512
+  ],
+  "mask_shape": [
+   512,
+   512
+  ],
+  "image_min": 0.0,
+  "image_max": 3366.0,
+  "mask_unique": [
+   0.0,
+   1.0
+  ]
+ },
+ {
+  "file": "2.mat",
+  "backend": "h5py",
+  "pid": "100360",
+  "label": 1,
+  "image_shape": [
+   512,
+   512
+  ],
+  "mask_shape": [
+   512,
+   512
+  ],
+  "image_min": 0.0,
+  "image_max": 3626.0,
+  "mask_unique": [
+   0.0,
+   1.0
+  ]
+ },
+ {
+  "file": "3.mat",
+  "backend": "h5py",
+  "pid": "100360",
+  "label": 1,
+  "image_shape": [
+   512,
+   512
+  ],
+  "mask_shape": [
+   512,
+   512
+  ],
+  "image_min": 0.0,
+  "image_max": 3695.0,
+  "mask_unique": [
+   0.0,
+   1.0
+  ]
+ },
+ {
+  "file": "4.mat",
+  "backend": "h5py",
+  "pid": "100360",
+  "label": 1,
+  "image_shape": [
+   512,
+   512
+  ],
+  "mask_shape": [
+   512,
+   512
+  ],
+  "image_min": 0.0,
+  "image_max": 4196.0,
+  "mask_unique": [
+   0.0,
+   1.0
+  ]
+ },
+ {
+  "file": "5.mat",
+  "backend": "h5py",
+  "pid": "100360",
+  "label": 1,
+  "image_shape": [
+   512,
+   512
+  ],
+  "mask_shape": [
+   512,
+   512
+  ],
+  "image_min": 0.0,
+  "image_max": 3948.0,
+  "mask_unique": [
+   0.0,
+   1.0
+  ]
+ }
+]

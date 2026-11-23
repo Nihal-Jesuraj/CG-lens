@@ -1,0 +1,121 @@
+{
+ "n_files": 3064,
+ "counts_by_label": {
+  "2": 1426,
+  "3": 930,
+  "1": 708
+ },
+ "patients_by_label": {
+  "1": 82,
+  "2": 89,
+  "3": 62
+ },
+ "pids_with_multiple_labels": [],
+ "image_size_histogram": [
+  {
+   "h": 256,
+   "w": 256,
+   "n": 15
+  },
+  {
+   "h": 512,
+   "w": 512,
+   "n": 3049
+  }
+ ],
+ "image_mask_shape_mismatch": 0,
+ "dtypes": [
+  "int16"
+ ],
+ "raw_intensity_min": 0.0,
+ "raw_intensity_max": 12728.0,
+ "empty_masks_original": 0,
+ "empty_masks_128": 0,
+ "mask_area_128_quantiles": {
+  "0": 14.0,
+  "5": 56.650000000000006,
+  "25": 154.0,
+  "50": 282.0,
+  "75": 457.0,
+  "95": 812.6999999999998,
+  "100": 1577.0
+ },
+ "backends": [
+  "h5py"
+ ],
+ "n_constant_images_removed": 0,
+ "n_dhash_candidate_pairs": 42440,
+ "n_dhash_candidate_cross_class_pairs": 16021,
+ "dhash_confirm_rmse": 0.05,
+ "dhash_candidate_rmse_by_class": {
+  "same_label_same_PID": {
+   "n_pairs": 1517,
+   "rmse_min": 0.03965057381424612,
+   "rmse_p1": 0.052109926506887734,
+   "n_edges_at_threshold": 9
+  },
+  "same_label_different_PID": {
+   "n_pairs": 24902,
+   "rmse_min": 0.056433698492580585,
+   "rmse_p1": 0.0950103500413643,
+   "n_edges_at_threshold": 0
+  },
+  "cross_label": {
+   "n_pairs": 16021,
+   "rmse_min": 0.08947930056840653,
+   "rmse_p1": 0.11189701286384086,
+   "n_edges_at_threshold": 0
+  }
+ },
+ "dhash_safe_threshold_interval": {
+  "lower_exclusive_same_PID_min": 0.03965057381424612,
+  "upper_exclusive_cross_label_min": 0.08947930056840653,
+  "max_safe_threshold": 0.08947930056840651,
+  "n_cross_label_edges_at_max_safe_threshold": 0
+ },
+ "plan_dhash_only_impact": {
+  "cross_label_endpoints_removed": 1162,
+  "slices_remaining": 972,
+  "groups_after_same_label_merging": 120,
+  "largest_group_slices": 314,
+  "largest_group_patients": 34
+ },
+ "n_confirmed_near_dup_pairs": 9,
+ "n_cross_class_near_dup_slices_removed": 0,
+ "n_cross_class_pairs": 0,
+ "n_same_class_edges": 9,
+ "n_groups": 171,
+ "image_size_assumption": "none (histogram above is measured)",
+ "dhash_patient_label_permutation": {
+  "observed_cross_label_candidates": 16021,
+  "candidate_pairs_total": 42440,
+  "n_patients": 171,
+  "patient_label_counts": {
+   "1": 82,
+   "2": 89
+  },
+  "n_permutations": 10000,
+  "seed": 2026,
+  "permutation_mean": 20548.5179,
+  "permutation_sd": 286.50396599670864,
+  "permutation_p025": 19822.975,
+  "permutation_median": 20604.0,
+  "permutation_p975": 20949.0,
+  "permutation_min": 18630,
+  "permutation_max": 21151,
+  "analytic_expectation": 20547.37213622291,
+  "lower_tail_probability": 9.999000099990002e-05
+ },
+ "sampled_cross_label_max_ssim": {
+  "n_pairs": 12,
+  "min": 0.42990011361335406,
+  "max": 0.5727565012052103,
+  "statistic": "max SSIM across 8 dihedral alignments; independently min-max scaled images; skimage structural_similarity(data_range=1)"
+ },
+ "cross_label_hamming_zero_max_ssim": {
+  "n_pairs": 7,
+  "min": 0.44311673849691746,
+  "max": 0.6157853285075074,
+  "statistic": "exhaustive cross-label subset with dHash Hamming distance 0; max SSIM across 8 dihedral alignments; independently min-max scaled images"
+ }
+}

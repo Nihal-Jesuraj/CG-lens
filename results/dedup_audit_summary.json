@@ -1,0 +1,47 @@
+{
+ "n_binary_after_pid_and_exact_filters": 2134,
+ "n_constant_excluded": 0,
+ "dHash_threshold": 6,
+ "pairs_within_threshold": {
+  "cross_label": 16021,
+  "same_label_same_PID": 1517,
+  "same_label_different_PID": 24902
+ },
+ "cross_label_slices_removed_by_rule": 1162,
+ "mean_cross_label_degree": 27.57487091222031,
+ "max_distance_scanned": 20,
+ "sample_count": 12,
+ "seed": 2026,
+ "sampled_cross_label_max_ssim": {
+  "n_pairs": 12,
+  "min": 0.42990011361335406,
+  "max": 0.5727565012052103,
+  "statistic": "max SSIM across 8 dihedral alignments; independently min-max scaled images; skimage structural_similarity(data_range=1)"
+ },
+ "cross_label_hamming_zero_max_ssim": {
+  "n_pairs": 7,
+  "min": 0.44311673849691746,
+  "max": 0.6157853285075074,
+  "statistic": "exhaustive cross-label subset with dHash Hamming distance 0; max SSIM across 8 dihedral alignments; independently min-max scaled images"
+ },
+ "patient_label_permutation": {
+  "observed_cross_label_candidates": 16021,
+  "candidate_pairs_total": 42440,
+  "n_patients": 171,
+  "patient_label_counts": {
+   "1": 82,
+   "2": 89
+  },
+  "n_permutations": 10000,
+  "seed": 2026,
+  "permutation_mean": 20548.5179,
+  "permutation_sd": 286.50396599670864,
+  "permutation_p025": 19822.975,
+  "permutation_median": 20604.0,
+  "permutation_p975": 20949.0,
+  "permutation_min": 18630,
+  "permutation_max": 21151,
+  "analytic_expectation": 20547.37213622291,
+  "lower_tail_probability": 9.999000099990002e-05
+ }
+}

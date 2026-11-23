@@ -1,0 +1,18 @@
+\begin{tabular}{llll}
+\hline
+check & value & threshold & passed \\
+\hline
+CG vs np.linalg.solve (16x16, max abs error) & 3.113065361048939e-13 & 1e-08 & True \\
+CG iteration count vs scipy.sparse.linalg.cg & 0 & 0 & True \\
+CG A-norm bound violations (32x32, all mu) & 0 & 0 & True \\
+IRLS vs CVXOPT: median relative difference at smallest mu & 0.0003264987246714 & decreasing in mu (H2) & True \\
+Gap bound 0 <= J\_mu - J\_0 <= lam p mu at every mu & True & True & True \\
+PCA singular values vs sklearn (relative) & 0.0 & 1e-10 & True \\
+PCA subspace min cos(theta) vs sklearn & 0.999999999999999 & >= 1 - 1e-8 & True \\
+SVM\_QP dual objective vs SVC (relative) & 1.7622939258379332e-07 & 0.001 & True \\
+SVM\_SMO dual objective vs SVC (relative) & 3.754660881173948e-08 & 0.01 & True \\
+SVM\_SMO final KKT gap & 0.0009389536499416484 & 0.001 & True \\
+E4 held-out prediction agreement QP vs SVC (R=4) & 0.9571921561210639 & 0.98 & False \\
+E4 held-out prediction agreement SMO vs SVC (R=4) & 0.9617283950617284 & 0.98 & False \\
+\hline
+\end{tabular}

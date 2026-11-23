@@ -1,0 +1,7 @@
+[
+ {
+  "when": "2026-11-23T07:53:24.798551+00:00",
+  "reason": "Added image similarity confirmation after dHash audit; corrected E5 split selection and solver diagnostics.",
+  "previous_hash": "{\"M1\": {\"R2_SNR25\": {\"edge_hit\": false, \"extensions\": 0, \"lam\": "
+ }
+]

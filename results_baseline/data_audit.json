@@ -1,0 +1,52 @@
+{
+ "n_files": 3064,
+ "counts_by_label": {
+  "2": 1426,
+  "3": 930,
+  "1": 708
+ },
+ "patients_by_label": {
+  "1": 82,
+  "2": 89,
+  "3": 62
+ },
+ "pids_with_multiple_labels": [],
+ "image_size_histogram": [
+  {
+   "h": 256,
+   "w": 256,
+   "n": 15
+  },
+  {
+   "h": 512,
+   "w": 512,
+   "n": 3049
+  }
+ ],
+ "image_mask_shape_mismatch": 0,
+ "dtypes": [
+  "int16"
+ ],
+ "raw_intensity_min": 0.0,
+ "raw_intensity_max": 12728.0,
+ "empty_masks_original": 0,
+ "empty_masks_128": 0,
+ "mask_area_128_quantiles": {
+  "0": 14.0,
+  "5": 50.550000000000004,
+  "25": 150.0,
+  "50": 277.5,
+  "75": 447.25,
+  "95": 825.0,
+  "100": 1577.0
+ },
+ "backends": [
+  "h5py"
+ ],
+ "n_constant_images_removed": 0,
+ "n_cross_class_near_dup_slices_removed": 1162,
+ "n_cross_class_pairs": 16021,
+ "n_same_class_edges": 251,
+ "n_groups": 120,
+ "image_size_assumption": "none (histogram above is measured)"
+}

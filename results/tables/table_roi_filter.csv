@@ -1,0 +1,3 @@
+cls,slices_before,slices_after,slices_excluded,patients_affected,patients_lost_all,area_q0_before,area_q0_after,area_q5_before,area_q5_after,area_q25_before,area_q25_after,area_q50_before,area_q50_after,area_q75_before,area_q75_after,area_q95_before,area_q95_after,area_q100_before,area_q100_after
+glioma,1426,1408,18,15,0,16.0,31.0,60.0,67.0,163.0,167.0,297.5,304.0,488.25,494.0,856.75,858.6499999999999,1577.0,1577.0
+meningioma,708,697,11,8,1,14.0,30.0,49.0,62.8,139.0,144.0,244.5,250.0,385.0,389.0,695.8999999999999,698.1999999999999,947.0,947.0

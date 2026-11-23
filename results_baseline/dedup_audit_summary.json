@@ -1,0 +1,15 @@
+{
+ "n_binary_after_pid_and_exact_filters": 2134,
+ "n_constant_excluded": 0,
+ "dHash_threshold": 6,
+ "pairs_within_threshold": {
+  "cross_label": 16021,
+  "same_label_same_PID": 1517,
+  "same_label_different_PID": 24902
+ },
+ "cross_label_slices_removed_by_rule": 1162,
+ "mean_cross_label_degree": 27.57487091222031,
+ "max_distance_scanned": 20,
+ "sample_count": 12,
+ "seed": 2026
+}

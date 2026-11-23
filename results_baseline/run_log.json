@@ -1,0 +1,87 @@
+[
+ {
+  "step": "environment",
+  "seconds": 597.0,
+  "returncode": 0
+ },
+ {
+  "step": "loader facts",
+  "seconds": 0.8,
+  "returncode": 0
+ },
+ {
+  "step": "dataset audit",
+  "seconds": 194.3,
+  "returncode": 0
+ },
+ {
+  "step": "cohorts",
+  "seconds": 1.8,
+  "returncode": 0
+ },
+ {
+  "step": "data manifest",
+  "seconds": 1.8,
+  "returncode": 0
+ },
+ {
+  "step": "G-BENCH",
+  "seconds": 17.5,
+  "returncode": 0
+ },
+ {
+  "step": "tuning (recon_val only)",
+  "seconds": 2671.6,
+  "returncode": 0
+ },
+ {
+  "step": "E1 reconstruction grid",
+  "seconds": 44.6,
+  "returncode": 0
+ },
+ {
+  "step": "E1 serial timing pass",
+  "seconds": 129.9,
+  "returncode": 0
+ },
+ {
+  "step": "E3 CVXOPT validation",
+  "seconds": 773.5,
+  "returncode": 0
+ },
+ {
+  "step": "E2 CG convergence",
+  "seconds": 17.8,
+  "returncode": 0
+ },
+ {
+  "step": "E4 diagnosis",
+  "seconds": 231.5,
+  "returncode": 0
+ },
+ {
+  "step": "E5 SVM solvers",
+  "seconds": 7.1,
+  "returncode": 0
+ },
+ {
+  "step": "validation summary",
+  "seconds": 1.6,
+  "returncode": 0
+ },
+ {
+  "step": "figures",
+  "seconds": 24.0,
+  "returncode": 0
+ },
+ {
+  "step": "tables",
+  "seconds": 0.7,
+  "returncode": 0
+ },
+ {
+  "step": "manifest",
+  "seconds": 2.1,
+  "returncode": 0
+ }
+]

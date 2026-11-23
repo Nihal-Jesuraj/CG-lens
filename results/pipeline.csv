@@ -1,0 +1,15 @@
+order,stage
+1,"T1-CE slice +
+tumor mask"
+2,"undersampled
+noisy k-space"
+3,"M0 / M1 / M2
+reconstruction"
+4,"fidelity: PSNR, SSIM,
+NMSE, ROI-NMSE"
+5,"64x64 features
++ PCA (train only)"
+6,"SVM QP / SMO
+patient-disjoint CV"
+7,"fidelity vs
+diagnosis"

@@ -1,0 +1,12 @@
+\begin{tabular}{l}
+\hline
+limitation \\
+\hline
+Synthetic k-space from already-reconstructed magnitude images; single coil, no phase, no scanner physics, single sequence. \\
+The same discrete model generates and inverts the data (inverse crime, Kaipio and Somersalo 2007); absolute PSNR/SSIM are optimistic. \\
+Downsampling to 128x128 removes fine detail; at most 2 slices per patient; one dataset, no external validation. \\
+The ROI-size rule (MIN\_ROI\_PIXELS) excludes small tumors from the reconstruction and classification cohorts; see roi\_filter\_audit.csv. \\
+The dataset mixes slice orientations and they are not labelled; a classifier could exploit orientation or position cues. \\
+Results show controlled algorithmic behaviour, not clinical performance. \\
+\hline
+\end{tabular}

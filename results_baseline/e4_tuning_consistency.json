@@ -1,0 +1,74 @@
+{
+ "folds": [
+  {
+   "fold": 0,
+   "sk": [
+    100.0,
+    0.1
+   ],
+   "qp": [
+    0.1,
+    0.1
+   ],
+   "exact": false,
+   "within_one": false
+  },
+  {
+   "fold": 1,
+   "sk": [
+    1.0,
+    1.0
+   ],
+   "qp": [
+    1.0,
+    1.0
+   ],
+   "exact": true,
+   "within_one": true
+  },
+  {
+   "fold": 2,
+   "sk": [
+    1.0,
+    0.1
+   ],
+   "qp": [
+    1.0,
+    0.1
+   ],
+   "exact": true,
+   "within_one": true
+  },
+  {
+   "fold": 3,
+   "sk": [
+    10.0,
+    1.0
+   ],
+   "qp": [
+    10.0,
+    1.0
+   ],
+   "exact": true,
+   "within_one": true
+  },
+  {
+   "fold": 4,
+   "sk": [
+    100.0,
+    0.1
+   ],
+   "qp": [
+    100.0,
+    0.1
+   ],
+   "exact": true,
+   "within_one": true
+  }
+ ],
+ "n_folds": 5,
+ "n_exact": 4,
+ "n_within_one_step": 4,
+ "TUNE_WITH_SKLEARN_used": true,
+ "rule": "flag False if fewer than half of the folds are within one grid step"
+}

@@ -1,0 +1,9 @@
+stage,slices_total,patients_total,slices_glioma,patients_glioma,slices_meningioma,patients_meningioma,slices_other,patients_other
+raw files,3064,233,1426,89,708,82,930.0,62.0
+binary label filter,2134,171,1426,89,708,82,0.0,0.0
+label-consistent PID,2134,171,1426,89,708,82,0.0,0.0
+exact-duplicate removal,2134,171,1426,89,708,82,0.0,0.0
+cross-class near-duplicate removal,972,165,631,86,341,79,0.0,0.0
+constant-image removal,972,165,631,86,341,79,0.0,0.0
+ROI-eligible,957,164,621,86,336,78,0.0,0.0
+cohort selection (recon_val + clf_pool),311,164,168,86,143,78,,

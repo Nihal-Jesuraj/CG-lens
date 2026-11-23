@@ -1,0 +1,51 @@
+{
+ "per_method_seconds": {
+  "M0": {
+   "per_point": [
+    0.01919320009765215
+   ],
+   "mean": 0.01919320009765215,
+   "middle": 0.01919320009765215
+  },
+  "M1": {
+   "per_point": [
+    0.022678924800129608,
+    0.02595219179056585,
+    0.026825091807404534
+   ],
+   "mean": 0.025152069466033333,
+   "middle": 0.02595219179056585
+  },
+  "M2": {
+   "per_point": [
+    0.248056549904868,
+    0.5386110166204162,
+    0.8867859916063026
+   ],
+   "mean": 0.557817852710529,
+   "middle": 0.5386110166204162
+  }
+ },
+ "slices_timed": 10,
+ "n_val": 30,
+ "n_eval": 79,
+ "n_pool": 294,
+ "projected_seconds": {
+  "tuning": 3725.4495820200077,
+  "e1": 368.9340501774568,
+  "e4_recon": 1378.6378736410172
+ },
+ "projected_serial_hours": 1.5202837516218006,
+ "budget_hours": 8.0,
+ "over_budget": false,
+ "cut_order": [
+  "M10 (E7, E8)",
+  "M9 (NLCG, E2 c-e, 1-D mask)",
+  "E2(c-e)",
+  "QP runs at n >= 1000 in E5",
+  "secondary SNR in E4",
+  "R = 2 and R = 6 in E4",
+  "E4 repeats 3 -> 1"
+ ],
+ "note": "timing at R=4, SNR=25 dB; M2 at three representative (lam, mu); excludes classification (minutes) and E5"
+}

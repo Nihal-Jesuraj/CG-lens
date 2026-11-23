@@ -1,0 +1,14 @@
+\begin{tabular}{lllllllll}
+\hline
+stage & slices\_total & patients\_total & slices\_glioma & patients\_glioma & slices\_meningioma & patients\_meningioma & slices\_other & patients\_other \\
+\hline
+raw files & 3064 & 233 & 1426 & 89 & 708 & 82 & 930 & 62 \\
+binary label filter & 2134 & 171 & 1426 & 89 & 708 & 82 & 0 & 0 \\
+label-consistent PID & 2134 & 171 & 1426 & 89 & 708 & 82 & 0 & 0 \\
+exact-duplicate removal & 2134 & 171 & 1426 & 89 & 708 & 82 & 0 & 0 \\
+cross-class near-duplicate removal & 2134 & 171 & 1426 & 89 & 708 & 82 & 0 & 0 \\
+constant-image removal & 2134 & 171 & 1426 & 89 & 708 & 82 & 0 & 0 \\
+ROI-eligible & 2105 & 170 & 1408 & 89 & 697 & 81 & 0 & 0 \\
+cohort selection (recon\_val + clf\_pool) & 324 & 165 & 172 & 86 & 152 & 79 &  &  \\
+\hline
+\end{tabular}

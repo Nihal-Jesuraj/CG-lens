@@ -1,0 +1,6 @@
+skipped n=1000: only 875 training slices
+skipped n=1500: only 875 training slices
+skipped n=1000: only 875 training slices
+skipped n=1500: only 875 training slices
+skipped n=1000: only 875 training slices
+skipped n=1500: only 875 training slices

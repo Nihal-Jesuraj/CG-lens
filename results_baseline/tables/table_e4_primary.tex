@@ -1,0 +1,30 @@
+\begin{tabular}{lllllllllllllll}
+\hline
+protocol & metric & A & B & mean\_diff\_folds & t & df & p\_nb & boot\_point & ci\_lo & ci\_hi & n\_patients & J & p\_holm & claim \\
+\hline
+A & balanced\_accuracy & original & M0\_R4\_SNR25 & -0.01632 & -1.73 & 14 & 0.1056 & -0.01231 & -0.02507 & 0.0008866 & 149 & 15 & 0.6338 & not significant \\
+A & balanced\_accuracy & original & M1\_R4\_SNR25 & 0.001551 & 0.05959 & 14 & 0.9533 & 0.003749 & -0.01463 & 0.02271 & 149 & 15 & 1 & not significant \\
+A & balanced\_accuracy & original & M2\_R4\_SNR25 & -0.0003068 & -0.01566 & 14 & 0.9877 & -0.0008867 & -0.01749 & 0.01586 & 149 & 15 & 1 & not significant \\
+A & balanced\_accuracy & M0\_R4\_SNR25 & M1\_R4\_SNR25 & 0.01788 & 0.6989 & 14 & 0.496 & 0.01606 & 0.002725 & 0.03011 & 149 & 15 & 1 & inconclusive \\
+A & balanced\_accuracy & M0\_R4\_SNR25 & M2\_R4\_SNR25 & 0.01602 & 0.7386 & 14 & 0.4724 & 0.01143 & -0.006054 & 0.02915 & 149 & 15 & 1 & not significant \\
+A & balanced\_accuracy & M1\_R4\_SNR25 & M2\_R4\_SNR25 & -0.001858 & -0.1205 & 14 & 0.9058 & -0.004636 & -0.01941 & 0.009162 & 149 & 15 & 1 & not significant \\
+A & macro\_f1 & original & M0\_R4\_SNR25 & -0.01464 & -1.694 & 14 & 0.1124 & -0.01234 & -0.02579 & 0.001098 & 149 & 15 & 0.6744 & not significant \\
+A & macro\_f1 & original & M1\_R4\_SNR25 & 0.001877 & 0.07407 & 14 & 0.942 & 0.003791 & -0.01475 & 0.02335 & 149 & 15 & 1 & not significant \\
+A & macro\_f1 & original & M2\_R4\_SNR25 & -0.0001955 & -0.01002 & 14 & 0.9921 & -0.0008781 & -0.01769 & 0.01583 & 149 & 15 & 1 & not significant \\
+A & macro\_f1 & M0\_R4\_SNR25 & M1\_R4\_SNR25 & 0.01652 & 0.6621 & 14 & 0.5187 & 0.01613 & 0.002652 & 0.03024 & 149 & 15 & 1 & inconclusive \\
+A & macro\_f1 & M0\_R4\_SNR25 & M2\_R4\_SNR25 & 0.01444 & 0.6549 & 14 & 0.5232 & 0.01146 & -0.005911 & 0.02901 & 149 & 15 & 1 & not significant \\
+A & macro\_f1 & M1\_R4\_SNR25 & M2\_R4\_SNR25 & -0.002073 & -0.1181 & 14 & 0.9077 & -0.004669 & -0.01941 & 0.009489 & 149 & 15 & 1 & not significant \\
+B & balanced\_accuracy & original & M0\_R4\_SNR25 & -0.00761 & -0.7519 & 14 & 0.4646 & -0.00646 & -0.01383 & 7.599e-05 & 149 & 15 & 1 & not significant \\
+B & balanced\_accuracy & original & M1\_R4\_SNR25 & -0.00761 & -0.7519 & 14 & 0.4646 & -0.00646 & -0.01383 & 7.599e-05 & 149 & 15 & 1 & not significant \\
+B & balanced\_accuracy & original & M2\_R4\_SNR25 & -0.003206 & -0.4728 & 14 & 0.6436 & -0.002584 & -0.009441 & 0.003683 & 149 & 15 & 1 & not significant \\
+B & balanced\_accuracy & M0\_R4\_SNR25 & M1\_R4\_SNR25 & 0 & 0 & 14 & 1 & 0 & 0 & 0 & 149 & 15 & 1 & not significant \\
+B & balanced\_accuracy & M0\_R4\_SNR25 & M2\_R4\_SNR25 & 0.004403 & 0.6935 & 14 & 0.4993 & 0.003876 & -0.001366 & 0.009722 & 149 & 15 & 1 & not significant \\
+B & balanced\_accuracy & M1\_R4\_SNR25 & M2\_R4\_SNR25 & 0.004403 & 0.6935 & 14 & 0.4993 & 0.003876 & -0.001366 & 0.009722 & 149 & 15 & 1 & not significant \\
+B & macro\_f1 & original & M0\_R4\_SNR25 & -0.008894 & -0.7704 & 14 & 0.4539 & -0.006468 & -0.01372 & 0.0001525 & 149 & 15 & 1 & not significant \\
+B & macro\_f1 & original & M1\_R4\_SNR25 & -0.008894 & -0.7704 & 14 & 0.4539 & -0.006468 & -0.01372 & 0.0001525 & 149 & 15 & 1 & not significant \\
+B & macro\_f1 & original & M2\_R4\_SNR25 & -0.003497 & -0.4734 & 14 & 0.6432 & -0.002593 & -0.009549 & 0.003819 & 149 & 15 & 1 & not significant \\
+B & macro\_f1 & M0\_R4\_SNR25 & M1\_R4\_SNR25 & 0 & 0 & 14 & 1 & 0 & 0 & 0 & 149 & 15 & 1 & not significant \\
+B & macro\_f1 & M0\_R4\_SNR25 & M2\_R4\_SNR25 & 0.005396 & 0.7735 & 14 & 0.4521 & 0.003876 & -0.001332 & 0.009763 & 149 & 15 & 1 & not significant \\
+B & macro\_f1 & M1\_R4\_SNR25 & M2\_R4\_SNR25 & 0.005396 & 0.7735 & 14 & 0.4521 & 0.003876 & -0.001332 & 0.009763 & 149 & 15 & 1 & not significant \\
+\hline
+\end{tabular}

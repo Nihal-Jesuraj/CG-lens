@@ -1,0 +1,13 @@
+\begin{tabular}{l}
+\hline
+limitation \\
+\hline
+Synthetic k-space from already-reconstructed magnitude images; single coil, no phase, no scanner physics, single sequence. \\
+The same discrete model generates and inverts the data (inverse crime, Kaipio and Somersalo 2007); absolute PSNR/SSIM are optimistic. \\
+Downsampling to 128x128 removes fine detail; at most 2 slices per patient; one dataset, no external validation. \\
+The ROI-size rule (MIN\_ROI\_PIXELS) excludes small tumors from the reconstruction and classification cohorts; see roi\_filter\_audit.csv. \\
+The dataset mixes slice orientations and they are not labelled; a classifier could exploit orientation or position cues. \\
+Results show controlled algorithmic behaviour, not clinical performance. \\
+Deviation from PLAN\_v4 §3 (conservative amendment): the plan's dHash Hamming distance <= 6 rule would remove 1,162 slices (54.5\%) and leave a largest merged group of 314 slices from 34 patients. We use dHash <= 6 only to generate candidates, then confirm candidates with min-max-scaled 128x128 dihedral RMSE <= 0.05. Among 42,440 candidates, the minimum cross-label RMSE is 0.089479. A seeded 10,000-permutation patient-label null has mean 20,548.5, SD 286.5, and 95\% range 19,823-20,949, versus 16,021 observed cross-label candidates; this candidate count alone does not establish duplication. The reproducible 12-pair cross-label sample has max-SSIM range 0.4299-0.5728; all 7 cross-label Hamming-0 pairs have range 0.4431-0.6158. The confirmed cross-label edge count is zero and the cross-class near-duplicate removal attrition row remains 0. Confirmation examines only dHash candidates (Hamming <= 6), so near-duplicates with larger Hamming distance are not caught. \\
+\hline
+\end{tabular}
