@@ -6,7 +6,7 @@ Review this repository against `PLAN_v4.md`, checking implementation, protocol, 
 
 - Install the pinned direct dependencies with `python -m pip install -r requirements-core.txt`. `requirements-freeze.txt` is a broad local snapshot; machine-specific path entries were removed.
 - Raw and processed MRI data are intentionally excluded from this archive. The README lists the Cheng dataset source and local verification commands.
-- History before 2026-11-23 is unavailable. The earlier full pipeline run used source commit `e1cce40`; the full E8 experiment run used `af3da72`. The E8 H5 table and regenerated manifest were produced from commit `54a9642`. This bundle includes `.git` for verifying the recorded commits. No earlier milestone tags are claimed.
+- History before 2026-11-23 is unavailable. The earlier full pipeline run used source commit `e1cce40`; the full E8 experiment run used `af3da72`. The E8 H5 table and regenerated manifest were produced from commit `54a9642`. This bundle omits `.git` to remain under the 25 MiB archive limit; the working repository retains the commits. No earlier milestone tags are claimed.
 - E6, M11, and E11 remain excluded per PLAN_v4 Section 10.
 
 ## Method decisions to review
