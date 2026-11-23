@@ -30,7 +30,7 @@ PLAN_v4 §3 uses dHash Hamming distance ≤ 6, drops cross-class matches, and me
 - E4 protocol B's M0−M2 balanced-accuracy and macro-F1 bootstrap intervals have lower bounds exactly 0.000. These are bootstrap boundary cases; the “not significant” labels should not be read as a sharp distinction from neighboring “inconclusive” rows.
 - E3 uses SNR 25 dB by default; pass `--snr inf` for the noise-free setting.
 - E8/H5 at R=4 and SNR=25 dB: PSNR and SSIM fall on finer-grid data for M0, M1, and M2; method ordering M2 > M1 >= M0 is unchanged. See `results/tables/table_e8_crime.csv` for patient-clustered paired differences and 95% bootstrap CIs.
-- History before 2026-11-23 is unavailable; the final run used source commit `e1cce40`. The generated results were recorded in commit `5cc9519`; no earlier milestone tags are claimed.
+- History before 2026-11-23 is unavailable. The earlier full pipeline run used source commit `e1cce40`; the full E8 experiment run used `af3da72`. The E8 H5 table and regenerated manifest were produced from commit `54a9642`. No earlier milestone tags are claimed.
 - `results/e5_log.txt` records solver skips/timeouts; it says “no skips or timeouts” when the run has none.
 
 ## Tests
