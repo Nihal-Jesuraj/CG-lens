@@ -17,6 +17,7 @@ Review this repository against `PLAN_v4.md`, checking implementation, protocol, 
 - E4 tuning consistency is interpreted as false if fewer than half of folds are within one grid step. The current diagnostic reports 4/5 within one step; folds 0 and 4 disagree between sklearn and QP selected settings.
 - The protocol B M0−M2 balanced-accuracy and macro-F1 intervals have lower bounds exactly 0.000. Treat these “not significant” labels as bootstrap boundary cases, not as a sharp distinction from neighboring “inconclusive” rows.
 - E3 uses SNR 25 dB by default; `--snr inf` selects noise-free data. The NLCG test tolerance is 1e-7 because the function-value Armijo test cannot resolve 1e-9 in float64; review the test and comment.
+- E8/H5 at R=4 and SNR=25 dB: PSNR and SSIM fall on finer-grid data for M0, M1, and M2; the ordering M2 > M1 >= M0 is unchanged. `results/tables/table_e8_crime.csv` reports patient-clustered paired differences and 95% bootstrap CIs.
 
 ## Where to look
 

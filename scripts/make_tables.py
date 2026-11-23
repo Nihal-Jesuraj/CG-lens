@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 import config
+from src import stats as statsm
 
 R = config.RESULTS_DIR
 
@@ -60,6 +61,43 @@ def solver_agreement_metrics(a):
     return a
 
 
+def e8_crime_summary():
+    """H5 table at R=4, SNR=25 dB with paired patient-clustered CIs."""
+    raw = pd.read_csv(R / "e8_crime.csv")
+    raw = raw[np.isclose(pd.to_numeric(raw.snr, errors="coerce"), config.SNR_PRIMARY)].copy()
+    slices = pd.read_csv(config.PROC_DIR / "slices.csv", usecols=["index", "pid"], dtype={"pid": str})
+    raw = raw.merge(slices, left_on="slice_index", right_on="index", validate="many_to_one")
+    patient = raw.groupby(["pid", "method"], as_index=True)[
+        ["psnr_matched", "ssim_matched", "psnr_crime_free", "ssim_crime_free"]
+    ].mean()
+    rows = []
+    metrics = (("PSNR", "psnr_matched", "psnr_crime_free"),
+               ("SSIM", "ssim_matched", "ssim_crime_free"))
+    for method_index, method in enumerate(("M0", "M1", "M2")):
+        p = patient.xs(method, level="method").sort_index()
+        for metric_index, (metric, matched_col, fine_col) in enumerate(metrics):
+            matched = p[matched_col].to_numpy(dtype=float)
+            finer = p[fine_col].to_numpy(dtype=float)
+            delta = finer - matched
+            ci = statsm.mean_diff_ci(
+                delta,
+                seed_keys=(81, config.R_PRIMARY, config.snr_code(config.SNR_PRIMARY), method_index, metric_index),
+            )
+            rows.append(dict(
+                R=config.R_PRIMARY,
+                snr=config.SNR_PRIMARY,
+                method=method,
+                metric=metric,
+                inverse_crime_mean=float(matched.mean()),
+                finer_grid_mean=float(finer.mean()),
+                paired_diff_finer_minus_matched=ci["point"],
+                ci95_lo=ci["lo"],
+                ci95_hi=ci["hi"],
+                n_patients=len(delta),
+            ))
+    return pd.DataFrame(rows)
+
+
 def main():
     config.ensure_dirs()
     head = []
@@ -107,6 +145,8 @@ def main():
             e = e.rename(columns={"kkt_gap": "libsvm_stop_criterion_b_interval_width"})
         cols = ["solve_time", "dual", "n_sv", "libsvm_stop_criterion_b_interval_width", "accuracy", "balanced_accuracy"]
         save("table_e5_scaling", e.groupby(["n", "kernel", "solver"], as_index=False)[[c for c in cols if c in e]].mean())
+    if have("e8_crime.csv"):
+        save("table_e8_crime", e8_crime_summary())
     if have("hyperparameters.csv"):
         save("table_hyperparameters", pd.read_csv(R / "hyperparameters.csv"))
     if have("limitations.csv"):
