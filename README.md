@@ -9,7 +9,7 @@ python -m pip install -r requirements-core.txt
 ```
 Download the Cheng brain-tumor dataset (figshare DOI 10.6084/m9.figshare.1512427, version 8) into `data/raw/` (git-ignored).
 
-`requirements-freeze.txt` preserves the local environment freeze with machine-local `file://` references removed. Use `requirements-core.txt` for the pinned direct dependencies.
+`requirements-freeze.txt` preserves the local environment snapshot with machine-specific path entries removed. Use `requirements-core.txt` for the pinned direct dependencies.
 
 ## Current data counts
 
@@ -27,8 +27,9 @@ PLAN_v4 §3 uses dHash Hamming distance ≤ 6, drops cross-class matches, and me
 ## Protocol notes
 
 - E4 tuning consistency: `TUNE_WITH_SKLEARN` is set to false only when fewer than half of the folds are within one grid step. In the current audit, 4/5 folds were within one step; folds 0 and 4 disagreed on the selected sklearn and QP settings (fold 4 was still within one grid step).
+- E4 protocol B's M0−M2 balanced-accuracy and macro-F1 bootstrap intervals have lower bounds exactly 0.000. These are bootstrap boundary cases; the “not significant” labels should not be read as a sharp distinction from neighboring “inconclusive” rows.
 - E3 uses SNR 25 dB by default; pass `--snr inf` for the noise-free setting.
-- No pre-submission history available. The supplied project had no Git history, so milestone commits cannot be reconstructed and no milestone tags are claimed.
+- History before 2026-11-23 is unavailable; the final run used source commit `e1cce40`. The generated results were recorded in commit `5cc9519`; no earlier milestone tags are claimed.
 - `results/e5_log.txt` records solver skips/timeouts; it says “no skips or timeouts” when the run has none.
 
 ## Tests

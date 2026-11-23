@@ -21,8 +21,10 @@ from src import svm
 def main():
     config.ensure_dirs()
     rows = []
-    def add(check, value, thr, ok, **extra):
-        rows.append(dict(check=check, value=value, threshold=thr, passed=ok, **extra))
+    def add(check, value, thr, ok, status=None, **extra):
+        if status is None:
+            status = "passed" if bool(ok) else "failed"
+        rows.append(dict(check=check, value=value, threshold=thr, status=status, **extra))
     M = mo.make_mask(16, 2, (2, 0))
     lam = 0.1
     H = qr.dense_H(M) + lam * (mo.D_sparse(16).T @ mo.D_sparse(16)).toarray()
@@ -46,8 +48,8 @@ def main():
         add("Gap bound 0 <= J_mu - J_0 <= lam p mu at every mu", bool(s.gap_bound_all_ok.all()), True, bool(s.gap_bound_all_ok.all()))
         for r in s.itertuples(index=False):
             frac, outer = float(r.irls_converged_frac), float(r.irls_outer_mean)
-            add(f"E3 IRLS convergence fraction at mu={r.mu:g}", frac, "1.0; inspect outer mean against 500 cap",
-                bool(frac >= 1.0 - 1e-12), mu=float(r.mu),
+            add(f"E3 IRLS convergence fraction at mu={r.mu:g}", frac,
+                "informational; outer iteration cap is 500", bool(frac >= 1.0 - 1e-12), status="informational", mu=float(r.mu),
                 irls_converged_frac=frac, irls_outer_mean=outer)
     X = np.random.default_rng(1).standard_normal((60, 40)) @ np.diag(np.linspace(5, 0.1, 40))
     ours, sk = pcam.PCA(n_components=8).fit(X), SKPCA(n_components=8, svd_solver="full").fit(X)

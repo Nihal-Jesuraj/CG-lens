@@ -4,9 +4,9 @@ Review this repository against `PLAN_v4.md`, checking implementation, protocol, 
 
 ## Reproducibility and data
 
-- Install the pinned direct dependencies with `python -m pip install -r requirements-core.txt`. `requirements-freeze.txt` is a broad local snapshot; machine-specific `file://` entries were removed.
+- Install the pinned direct dependencies with `python -m pip install -r requirements-core.txt`. `requirements-freeze.txt` is a broad local snapshot; machine-specific path entries were removed.
 - Raw and processed MRI data are intentionally excluded from this archive. The README lists the Cheng dataset source and local verification commands.
-- The project did not arrive with Git history. The README records: “No pre-submission history available.” Do not infer or invent milestone tags.
+- History before 2026-11-23 is unavailable; the final run used source commit `e1cce40`. The post-run outputs were recorded in `5cc9519`. The archive omits `.git`; use the recorded run commit for provenance. No earlier milestone tags are claimed.
 - E6, M11, and E11 remain excluded per PLAN_v4 Section 10.
 
 ## Method decisions to review
@@ -15,6 +15,7 @@ Review this repository against `PLAN_v4.md`, checking implementation, protocol, 
 - The audit found 16,021 cross-label candidates among 42,440. A fixed-seed, 10,000-permutation patient-label null has mean 20,548.5, SD 286.5, and 95% range 19,823–20,949; the observed count falls below that range. Candidate counts alone do not establish duplication.
 - SSIM evidence comes from two sets: the reproducible seeded 12-pair cross-label sample has max-SSIM range 0.4299–0.5728; the exhaustive set of all seven cross-label Hamming-0 pairs has range 0.4431–0.6158. See `results/dedup_audit_summary.json` and its source script.
 - E4 tuning consistency is interpreted as false if fewer than half of folds are within one grid step. The current diagnostic reports 4/5 within one step; folds 0 and 4 disagree between sklearn and QP selected settings.
+- The protocol B M0−M2 balanced-accuracy and macro-F1 intervals have lower bounds exactly 0.000. Treat these “not significant” labels as bootstrap boundary cases, not as a sharp distinction from neighboring “inconclusive” rows.
 - E3 uses SNR 25 dB by default; `--snr inf` selects noise-free data. The NLCG test tolerance is 1e-7 because the function-value Armijo test cannot resolve 1e-9 in float64; review the test and comment.
 
 ## Where to look

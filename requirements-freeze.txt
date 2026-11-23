@@ -1,4 +1,4 @@
-# Full local environment freeze; machine-specific file:// references were removed.
+# Full local environment snapshot; machine-specific path entries were removed.
 # Install the portable, pinned direct dependencies from requirements-core.txt.
 
 appdirs==1.4.4
