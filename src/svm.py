@@ -1,4 +1,9 @@
-"""Class-balanced kernel SVMs: dual QP via CVXOPT and deterministic max-violating-pair SMO (Section 4.8)."""
+"""Class-balanced kernel SVMs: dual QP via CVXOPT and deterministic max-violating-pair SMO (Section 4.8).
+
+``kernel="precomputed"`` takes a Gram matrix in ``fit``/``fit_kernel`` and a
+cross-kernel ``(m, n_train)`` in ``decision_function``, following the
+scikit-learn convention; the kernel functions above are then never called.
+"""
 import time
 
 import cvxopt
@@ -71,33 +76,64 @@ class _SVM:
     solver = "base"
 
     def __init__(self, C=1.0, kernel="rbf", gamma=1.0, class_balanced=True):
+        if kernel not in ("rbf", "linear", "precomputed"):
+            raise ValueError(f"unknown kernel {kernel!r}; expected 'rbf', 'linear' or 'precomputed'")
         self.C, self.kernel, self.gamma, self.class_balanced = C, kernel, gamma, class_balanced
 
+    @property
+    def precomputed(self):
+        """True when the caller supplies the Gram matrix instead of features."""
+        return self.kernel == "precomputed"
+
     def _K(self, X, Y):
+        if self.precomputed:
+            raise RuntimeError("kernel='precomputed': pass Gram matrices to fit()/decision_function(), not features")
         return rbf_kernel(X, Y, self.gamma) if self.kernel == "rbf" else linear_kernel(X, Y)
 
     def fit(self, X, y):
         X, y = np.asarray(X, dtype=np.float64), np.asarray(y, dtype=np.float64)
+        if self.precomputed:
+            if X.ndim != 2 or X.shape[0] != X.shape[1]:
+                raise ValueError("kernel='precomputed' expects a square training Gram matrix K (n_train x n_train)")
+            self.kernel_time = 0.0
+            return self.fit_kernel(X, y, None)
         t0 = time.perf_counter()
         K = self._K(X, X)
         self.kernel_time = time.perf_counter() - t0
         return self.fit_kernel(K, y, X)
 
-    def fit_kernel(self, K, y, X):
+    def fit_kernel(self, K, y, X=None):
         y = np.asarray(y, dtype=np.float64)
+        K = np.asarray(K, dtype=np.float64)
+        if K.ndim != 2 or K.shape[0] != K.shape[1]:
+            raise ValueError("fit_kernel expects a square Gram matrix")
+        if K.shape[0] != len(y):
+            raise ValueError("Gram matrix size must match len(y)")
         Cvec = balanced_C(y, self.C) if self.class_balanced else np.full(len(y), float(self.C))
         t0 = time.perf_counter()
         alpha = self._solve(K, y, Cvec)
         self.solve_time = time.perf_counter() - t0
         self.alpha_, self.y_, self.Cvec_ = alpha, y, Cvec
         self.b_ = _bias(alpha, y, K, Cvec)
+        self.n_train_ = len(y)
         self.sv_mask_ = alpha > _UP_LOW_EPS * Cvec
-        self.X_sv_, self.coef_ = np.asarray(X)[self.sv_mask_], (alpha * y)[self.sv_mask_]
+        self.sv_idx_ = np.flatnonzero(self.sv_mask_)
+        self.coef_ = (alpha * y)[self.sv_mask_]
+        self.X_sv_ = None if X is None else np.asarray(X)[self.sv_mask_]
         self.dual_ = dual_objective(alpha, y, K)
         self.kkt_gap_ = kkt_gap(alpha, y, K, Cvec)
         return self
 
     def decision_function(self, X):
+        if self.precomputed:
+            Kt = np.asarray(X, dtype=np.float64)
+            if Kt.ndim == 1:
+                Kt = Kt[None, :]
+            if Kt.ndim != 2 or Kt.shape[1] != self.n_train_:
+                raise ValueError(f"precomputed test kernel must have shape (m, {self.n_train_})")
+            return Kt[:, self.sv_idx_] @ self.coef_ + self.b_
+        if self.X_sv_ is None:
+            raise RuntimeError("model was fitted without training features; use kernel='precomputed'")
         return self._K(np.asarray(X, dtype=np.float64), self.X_sv_) @ self.coef_ + self.b_
 
     def predict(self, X):
