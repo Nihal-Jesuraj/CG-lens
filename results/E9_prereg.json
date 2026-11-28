@@ -1,0 +1,419 @@
+{
+  "prereg_version": 1,
+  "experiment": "E9",
+  "title": "Quantum-kernel SVM (exact classical statevector simulation) versus an RBF control on identical q=8 PCA features",
+  "written_utc": "2026-11-28T08:43:49Z",
+  "declaration": "Written and committed before any E9 evaluation. At the commit that adds this file none of results/E9_primary.json, results/E9_folds.csv, results/E9_tuning.json or results/E9_diagnostics.json exists. Any later change is appended to amendments, never edited in place.",
+  "code": {
+    "git_branch": "main",
+    "git_head": "f514b2a85dcb342970b0a55dfa39bdcc505f0528",
+    "working_tree_dirty_at_declaration": false,
+    "dirty_paths": [],
+    "note": "git_head is the commit that contains the pinned code; at finalization git status --porcelain --untracked-files=no printed nothing. The exact code is pinned by the SHA-256 values below; the runner re-verifies them and refuses to run on a mismatch.",
+    "sha256": {
+      "src/svm.py": "fb1fb33380e3e4578681600df03631bd92ca8a0eec072f6cb8520dd11aa1c0cc",
+      "src/quantum/simulator.py": "5920223f71862b896efc3f310c996097bcce00d9bbcfb1abec359bcebd494698",
+      "src/quantum/feature_maps.py": "cfdba2b2a5580c740a17c7cb819f65a38baf72bac74b642f07d34f0a3144cbf8",
+      "src/quantum/kernels.py": "7c2d9fda9fad67c9cb32fe8f58fcfadc65d980089b950d7792db0634b646baa2",
+      "src/quantum/__init__.py": "8a59f50c5a5bbf571d3c39e9cddb4c79db390266374c42705fbd38d9716c19e3",
+      "config.py": "9151e20a55f3f95caecef22907599ebca604660f2e6646ffba7be0b8e45d1f11",
+      "src/stats.py": "3f4acac51e97926061d43f7d0fec0b5716b1548e80cd6c37cf1d4391fa9b43fe",
+      "src/pca.py": "99bf7fccdc58b9c8268ae39d75c6e10e31243dc649c46d03b97cd1e8934b5c80",
+      "src/common.py": "fbdf41a6f1a601dd555f01a15cca4d415a911cb41fe0ca0439096594c02fc08b"
+    }
+  },
+  "data": {
+    "cohort": "clf_pool (results/splits.json)",
+    "n_slices": 294,
+    "n_patients": 150,
+    "slices_by_label": {
+      "+1_glioma": 156,
+      "-1_meningioma": 138
+    },
+    "patients_by_label": {
+      "+1_glioma": 78,
+      "-1_meningioma": 72
+    },
+    "sha256": {
+      "results/folds.json": "b09bc518fc2b87962a11d62395e096f009716d5a941a729b9615636ca5d64ec7",
+      "results/splits.json": "57f48306aef32062fe6bbe2062515fd1c199d1b581c4c0cf3955caefc899eb9b",
+      "data/processed/slices.csv": "67aaf0b87a169a216043cd31c9dfc1a9bfca7c2faa20df2369abe4ca57143475",
+      "data/processed/raw_meta.csv": "6af5245e86bb8971bb9387293b10d67932b658c967ca793b9245c8655355f73b",
+      "data/processed/slices.npz": "1cb8ad0b9f2cd3aee9cc8e53cc1fb3f2fa115cd16fc0254e842f1df2ec544679"
+    }
+  },
+  "folds": {
+    "source": "results/folds.json, reused verbatim from E4",
+    "outer": 5,
+    "repeats": 3,
+    "inner": 3,
+    "J": 15,
+    "mean_n_train": 235.2,
+    "mean_n_test": 58.8,
+    "n_test_over_n_train": 0.25,
+    "patient_disjoint": true,
+    "note": "the same 15 outer and 45 inner splits are used for the QSVM and for every control; no fold is re-drawn"
+  },
+  "conditions": {
+    "protocol": "A",
+    "R": 4,
+    "snr_db": 25,
+    "levels": [
+      "original",
+      "M0_R4_SNR25",
+      "M1_R4_SNR25",
+      "M2_R4_SNR25"
+    ],
+    "features": "src.common.feature on the reconstruction; byte-identical arrays to E4"
+  },
+  "preprocessing": {
+    "pca": "src.pca.PCA(n_components=8) fitted on the training fold only; the same Z is given to the QSVM and to the RBF control",
+    "quantum_scaler": "AngleScaler fitted on the same training fold: u=(z-min)/(max-min) with training min/max, constant component -> u=0.5, theta=s*pi*u, test values never clipped",
+    "control_scaler": "none beyond the PCA"
+  },
+  "quantum_model": {
+    "simulator": "exact statevector, numpy complex128; no shots, no noise in the primary run",
+    "feature_map": "zz (IQP): D(theta)=exp(i[sum_i theta_i Z_i + sum_{i<j}(pi-theta_i)(pi-theta_j) Z_i Z_j]), U(theta)=[D(theta) H^otimes q]^L",
+    "L": 2,
+    "q": 8,
+    "hilbert_dim": 256,
+    "kernel": "K(x,x') = |<phi(x)|phi(x')>|^2; unit diagonal, PSD by construction",
+    "classifier": "src.svm.SVM_QP(kernel='precomputed'), class-balanced C_i = C*n/(2*n_class(i))"
+  },
+  "primary_family": {
+    "n_tests": 4,
+    "tests": [
+      {
+        "id": 0,
+        "name": "QSVM - RBF(q=8), original"
+      },
+      {
+        "id": 1,
+        "name": "QSVM - RBF(q=8), M0_R4_SNR25"
+      },
+      {
+        "id": 2,
+        "name": "QSVM - RBF(q=8), M1_R4_SNR25"
+      },
+      {
+        "id": 3,
+        "name": "QSVM - RBF(q=8), M2_R4_SNR25"
+      }
+    ],
+    "metric": "balanced accuracy",
+    "contrast": "QSVM minus RBF control, paired within fold",
+    "direction": "two-sided",
+    "alpha": 0.05,
+    "multiplicity": "Holm-Bonferroni over the 4 primary p-values, family-wise alpha = 0.05",
+    "significance_rule": "a test is called significant only if the Holm-adjusted p < 0.05 AND the patient-clustered bootstrap 95% CI of the paired difference excludes 0; if exactly one gate passes the test is called inconclusive; otherwise not significant",
+    "no_alternative_rule": "no metric, subset, level, q or L outside this list may be promoted to a primary claim after seeing results"
+  },
+  "grids": {
+    "C": [
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "s_quantum": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "g_rbf_control": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "gamma_control": "gamma = g / (k * Var(Z_train)) with k = 8 (src.svm.gamma_from_g)",
+    "budget": {
+      "qsvm_configs": 16,
+      "rbf_control_configs": 16,
+      "statement": "4 C x 4 s = 16 for the QSVM and 4 C x 4 g = 16 for the RBF(q=8) control, so the two tuning budgets match. The control grid extends the frozen E4 grid [0.1, 1, 10] by one decade at the low end because 186 of 390 E4 selections landed on the 0.1 edge; this is stated here, before E9."
+    },
+    "selection_protocol": "mean balanced accuracy over the 3 inner StratifiedGroupKFold folds of the outer training set; PCA and AngleScaler refitted inside every inner training fold",
+    "tie_break": "first in the declared grid order, i.e. smallest C, then smallest s (respectively g)"
+  },
+  "grid_edge_rule": {
+    "trigger": "after the base grid, if the selected value of a parameter is the minimum or maximum of its current grid",
+    "step": "append one value beyond that edge: x10 for C and g, x2 for s",
+    "evaluation": "re-evaluate the full Cartesian product of the extended grid",
+    "cap": "at most one extension per parameter and at most two per fold; worst case 6x6 = 36 configs",
+    "symmetry": "the rule is applied identically to the QSVM and to the RBF control; differing extension counts are recorded and reported, and are never a reason to re-tune after seeing outer-fold results",
+    "recorded": [
+      "edge_hit",
+      "extensions",
+      "still_at_edge"
+    ],
+    "precedent": "same keys and cap as config.EDGE_MAX_EXTENSIONS = 2 used for M1/M2 in results/hyperparams.json"
+  },
+  "inference": {
+    "fold_test": {
+      "function": "src.stats.nadeau_bengio_ttest(d, n_train, n_test)",
+      "J": 15,
+      "df": 14,
+      "variance": "(1/J + n_test/n_train) * s_d^2, s_d the sample SD (ddof=1) of the 15 paired fold differences",
+      "sidedness": "two-sided"
+    },
+    "bootstrap": {
+      "function": "src.stats.paired_diff_ci(counts_a, counts_b, 'balanced_accuracy', B=10000, seed_keys=(41, test_id))",
+      "B": 10000,
+      "cluster": "patient (soft confusion counts summed per patient)",
+      "interval": "percentile 95%",
+      "seeds": "numpy SeedSequence([2026, 41, test_id]), integer keys only"
+    },
+    "mde": {
+      "formula": "MDE = (t_{0.975,14} + t_{0.80,14}) * sqrt((1/15 + n_test/n_train) * s_d^2)",
+      "alpha": 0.05,
+      "power": 0.8,
+      "also_report_bonferroni": {
+        "alpha": 0.0125,
+        "alpha_expression": "0.05 / 4",
+        "formula": "MDE = (t_{0.99375,14} + t_{0.80,14}) * sqrt((1/15 + n_test/n_train) * s_d^2)",
+        "note": "the per-test Bonferroni level, a conservative companion to the Holm-adjusted test; reported alongside the alpha=0.05 MDE for every test"
+      },
+      "interpretation": "post hoc sensitivity description computed from the observed s_d of each test; it does not enter the decision rule and is not a prospective power calculation",
+      "reported_in": "results/E9_primary.json, both values per test"
+    }
+  },
+  "failure_handling": {
+    "rule": "every fold x level x model produces a row; nothing is dropped",
+    "solver_non_optimal": "SVM_QP status, iterations and KKT gap are recorded; if the solve raises or returns no x, alpha and the metric are NaN, the row keeps status='failed', and the count n_failed is reported next to every affected test",
+    "non_psd": "K is PSD by construction; psd_report(K).min_eig is recorded. If min_eig < -1e-10 the run is flagged non_psd=true in E9_diagnostics.json and reported; the primary analysis is unchanged and no eigenvalue clipping is applied",
+    "nan_metric": "kept in results/E9_folds.csv; the paired test uses finite pairs only and reports J_used; if J_used < 15 this is stated with the p-value",
+    "single_class_fold": "cannot occur by construction (StratifiedGroupKFold on both classes); if it does, recorded as status='single_class'"
+  },
+  "not_claimed": [
+    "no quantum speedup: the simulator costs O(n^2 2^q) time and O(2^q) memory per state",
+    "no quantum hardware, no noise model beyond the explicit depolarizing diagnostic",
+    "a kernel computed on a simulator is a classical baseline, not evidence of quantum advantage"
+  ],
+  "outputs": {
+    "primary": "results/E9_primary.json",
+    "folds": "results/E9_folds.csv",
+    "tuning": "results/E9_tuning.json",
+    "diagnostics": "results/E9_diagnostics.json",
+    "prereg": "results/E9_prereg.json",
+    "prereg_sha256": "recorded inside E9_primary.json as prereg_sha256",
+    "cache": "data/cache/<sha256>.npy via src.cache.get_or_compute, key = SHA-256 of canonical JSON {key, config_hash}",
+    "exploratory": "results/E9_exploratory.csv"
+  },
+  "amendments": [],
+  "exploratory": {
+    "status": "exploratory: excluded from the decision rule and from the Holm family. Reported with descriptive patient-clustered 95% bootstrap CIs only (B=10000, seed_keys=(42, run_id)); no p-values and no significance claims of any kind. Nothing here can be promoted to a primary claim after seeing results.",
+    "budget_note": "This list is fixed before execution; no run outside it is performed under the E9 name.",
+    "hyperparameter_policy": "Every run that changes the features or the kernel re-tunes (C, s) - or (C, g) for its paired RBF control - over the same pre-declared 4x4 grid and the same edge rule, on the inner folds of the same 15 outer splits. X7, X8 and X10 are the only runs that reuse primary hyperparameters, as stated in each entry.",
+    "runs": [
+      {
+        "id": "X1",
+        "name": "q sweep",
+        "q": [
+          4,
+          6
+        ],
+        "fixed": {
+          "map": "zz",
+          "L": 2,
+          "protocol": "A",
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "re-tuned (C, s) on the inner folds of each of the 15 outer splits, 16-config grid, same edge rule",
+        "paired_control": "RBF on the same q PCA features, re-tuned (C, g) over the same 4x4 grid on the same folds",
+        "reason": "kernel-dimension ablation with a matched classical counterpart in every cell"
+      },
+      {
+        "id": "X2",
+        "name": "L sweep",
+        "L": [
+          1
+        ],
+        "fixed": {
+          "map": "zz",
+          "q": 8,
+          "protocol": "A",
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "re-tuned (C, s), 16-config grid, same edge rule",
+        "paired_control": "RBF on q=8 features, re-tuned (C, g); identical to the primary control because the features are unchanged",
+        "excluded": {
+          "L": 3,
+          "reason": "L=3 was never in the plan (the plan was L in {1,2}); adding it now would be a post hoc degree of freedom"
+        }
+      },
+      {
+        "id": "X3",
+        "name": "product-state kernel (entanglement ablation)",
+        "map": "product",
+        "fixed": {
+          "q": 8,
+          "L": 1,
+          "protocol": "A",
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "re-tuned (C, s) over the same 16-config grid and edge rule; the product map is not given the ZZ-tuned s",
+        "paired_control": "RBF on q=8 features, re-tuned (C, g) over the same 4x4 grid on the same folds",
+        "reason": "removes the entangling ZZ phase; a fair ablation needs its own bandwidth, otherwise a gap could be a mistuned s"
+      },
+      {
+        "id": "X4",
+        "name": "linear SVM control",
+        "map": "none (linear kernel on the same 8 PCA features)",
+        "fixed": {
+          "protocol": "A",
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "C tuned over the same 4-value grid on the same inner folds; no s"
+      },
+      {
+        "id": "X5",
+        "name": "R=8",
+        "fixed": {
+          "map": "zz",
+          "L": 2,
+          "q": 8,
+          "protocol": "A",
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "re-tuned (C, s) on this cell's inner folds, 16-config budget, same edge rule",
+        "paired_control": "RBF on the same q=8 features at R=8, re-tuned (C, g) over the same 4x4 grid"
+      },
+      {
+        "id": "X6",
+        "name": "noise-free",
+        "fixed": {
+          "map": "zz",
+          "L": 2,
+          "q": 8,
+          "protocol": "A",
+          "R": 4,
+          "snr_db": "inf"
+        },
+        "levels": "all 4",
+        "hyperparameters": "re-tuned (C, s) on this cell's inner folds, 16-config budget, same edge rule",
+        "paired_control": "RBF on the same q=8 features, noise-free, re-tuned (C, g) over the same 4x4 grid"
+      },
+      {
+        "id": "X7",
+        "name": "Protocol B",
+        "fixed": {
+          "map": "zz",
+          "L": 2,
+          "q": 8,
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "the Protocol A model of the ORIGINAL level for that outer fold is reused unchanged",
+        "protocol_b_definition": "train on the original level only: PCA basis and AngleScaler are fitted on the original training features; each level's test features are projected with that original PCA basis and mapped with that original scaler",
+        "no_clipping": "test angles may leave [0, s*pi] because the original training range does not cover a reconstruction level; no clipping is applied, by design",
+        "paired_control": "RBF(q=8) fitted on the original features with the original PCA basis, applied to each level"
+      },
+      {
+        "id": "X8",
+        "name": "shot noise",
+        "S": [
+          1000,
+          10000
+        ],
+        "fixed": {
+          "map": "zz",
+          "L": 2,
+          "q": 8,
+          "protocol": "A",
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "hyperparameters": "primary (C, s) frozen",
+        "draws_per_fold": 5,
+        "noise_application": "binomial sampling is applied independently to the training Gram K_tr (symmetric, unit diagonal restored) and to the test-train cross Gram K_te,tr (no symmetry constraint); both are perturbed before the SVM sees them",
+        "seeds": "SeedSequence([2026, 81, run_id, outer_fold_index, draw_id]) with integer keys",
+        "variants": [
+          "raw",
+          "psd_project"
+        ],
+        "variant_note": "raw keeps the unit diagonal and may be slightly indefinite; psd_project clips negative eigenvalues and does not renormalise the diagonal. psd_project is applied to the training Gram only: the test-train cross Gram has no PSD projection, so the projected variant is a pragmatic repair rather than a kernel induced by a feature map, and is labelled as such. The diagonal deviation after projection is reported.",
+        "solvers": "SVM_QP and SVM_SMO are both attempted on every noisy Gram; each row records its status, and a failed QP is reported as failed rather than silently replaced by SMO",
+        "diagnostics": "kernel-target alignment and min eigenvalue per level, S, draw and variant"
+      },
+      {
+        "id": "X10",
+        "name": "E4 RBF on the full PCA subspace",
+        "type": "quoted, not re-run",
+        "source": "results/e4_fold_metrics.csv and results/e4_primary.csv (already committed)",
+        "reason": "context for the q=8 compression, not a new comparison"
+      },
+      {
+        "id": "X11",
+        "name": "descriptive kernel diagnostics",
+        "type": "descriptive, no hypothesis test",
+        "q": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "fixed": {
+          "map": "zz",
+          "L": 2,
+          "protocol": "A",
+          "R": 4,
+          "snr_db": 25
+        },
+        "levels": "all 4",
+        "quantities": [
+          "kernel spectrum (all eigenvalues, min and max)",
+          "effective (stable) rank ||K||_F^2 / ||K||_2^2",
+          "off-diagonal mean and variance",
+          "kernel-target alignment",
+          "balanced accuracy at the re-tuned (C, s)"
+        ],
+        "reuse": "q = 4 and q = 6 reuse the X1 runs; no duplicate fits",
+        "reported_as": "spectrum and rank table plus a KTA-versus-balanced-accuracy scatter across q and level",
+        "note": "descriptive only; no p-values, no significance claims, no decision rule"
+      }
+    ],
+    "reporting": "one appendix table plus the multi-panel figure; never merged into the primary family",
+    "withdrawn": [
+      {
+        "id": "X9",
+        "name": "depolarizing fits",
+        "reason": "superseded by Proposition 1: the depolarizing channel is a uniform rescaling of C on the y^T alpha = 0 subspace, so no fits are needed and none are run"
+      }
+    ],
+    "propositions": [
+      {
+        "id": "P1",
+        "name": "depolarizing invariance",
+        "statement": "For K_p = (1-p)K + (p/2^q) 1 1^T and any C > 0, the SVM trained on K_p with box C and the SVM trained on K with box (1-p)C have the same decision function.",
+        "proof": [
+          "On y^T alpha = 0, alpha^T[(y y^T) o (1 1^T)] alpha = (y^T alpha)^2 = 0, so the K_p dual is D_p(alpha) = 1^T alpha - (1-p)/2 * alpha^T Q alpha with Q = (y y^T) o K.",
+          "alpha = beta/(1-p) maps the box 0 <= alpha <= C onto 0 <= beta <= (1-p)C and gives D_p(beta/(1-p)) = (1/(1-p)) [1^T beta - 1/2 beta^T Q beta], so both duals have the same maximizer up to this scaling.",
+          "Then f(x) = sum_i alpha_i y_i K_p(x,x_i) + b = sum_i beta_i y_i K(x,x_i) + b, because the constant (p/2^q) 1 1^T term is annihilated by y^T beta = 0 and the bias is unchanged by the KKT conditions."
+        ],
+        "implementation_caveat": "SVM_QP adds config.SVM_RIDGE * I to the dual quadratic form, which breaks the invariance by O(ridge); T7 sets SVM_RIDGE = 0 to test the mathematical statement. Class-balanced C_i scale uniformly, so the statement holds with C_i -> (1-p) C_i.",
+        "verified_by": "tests/quantum/test_depolarizing_invariance.py (T7, QP and SMO, 1e-10)",
+        "consequence": "the p in {0.01, 0.05} depolarizing runs are exactly the primary fits with C scaled by 1-p"
+      }
+    ]
+  },
+  "finalized_utc": "2026-11-28T09:08:55Z"
+}
